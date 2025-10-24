@@ -3,7 +3,10 @@
 
 ```markdown
 # 🧠 GPT-Mini
-*A compact GPT-style language model built from scratch, trained on Shakespeare.*
+*A compact GPT-style language model built from scratch, trained on Shakespeare.*  
+Learns character-level patterns, style, and rhythm from Shakespeare’s works.  
+Fully implemented in PyTorch with a decoder-only Transformer architecture.
+
 
 ---
 
@@ -181,5 +184,5 @@ python deploy/app.py
 Small. Transparent. Teachable.
 GPT-Mini captures **how transformers generate language**, with focus on clarity and understanding.
 
-*— 2025*
+
 
