@@ -49,7 +49,7 @@ def main():
 
     print(f"Model parameters: {sum(p.numel() for p in model.parameters())/1e6:.2f}M")
 
-    optimizer = torch.optim.AdamW(model.parameters(), lr=train_cfg.lr)
+    optimizer = torch.optim.AdamW(model.parameters(), lr=float(train_cfg.lr))
 
     # Training loop
     for step in range(train_cfg.max_steps):
