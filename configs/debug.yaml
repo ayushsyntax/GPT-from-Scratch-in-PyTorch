@@ -1,0 +1,15 @@
+# debug.yaml
+
+model:
+  vocab_size: 65
+  embed_dim: 64
+  num_layers: 2
+  num_heads: 2
+  max_seq_len: 32
+  dropout: 0.1
+
+train:
+  batch_size: 8
+  lr: 1e-3
+  max_steps: 100
+  eval_interval: 20
