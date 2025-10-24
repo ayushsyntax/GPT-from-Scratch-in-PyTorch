@@ -2,15 +2,16 @@
 ---
 
 # 🧠 GPT-Mini
-*A compact GPT-style language model built from scratch, trained on Shakespeare.*  
-Learns character-level patterns, style, and rhythm from Shakespeare’s works.  
+
+*A compact GPT-style language model built from scratch, trained on Shakespeare.*
+Learns character-level patterns, style, and rhythm from Shakespeare’s works.
 Fully implemented in PyTorch with a decoder-only Transformer architecture.
 
 ---
 
 ### 🎬 Demo
 
-[GPT-Mini Demo](https://youtu.be/FSzQwOj5jyA)  
+[GPT-Mini Demo](https://youtu.be/FSzQwOj5jyA)
 
 *Click to watch GPT-Mini generate Shakespearean text in real time.*
 
@@ -18,45 +19,50 @@ Fully implemented in PyTorch with a decoder-only Transformer architecture.
 
 ## 📖 Overview
 
-**GPT-Mini** is a decoder-only Transformer implemented in **PyTorch**, trained on the complete works of Shakespeare (~1.1M characters).  
+**GPT-Mini** is a decoder-only Transformer implemented in **PyTorch**, trained on the complete works of Shakespeare (~1.1M characters).
 
-It learns **character-level language modeling**, capturing voice, structure, and rhythm from Shakespeare’s plays and poetry.  
+It learns **character-level language modeling**, capturing voice, structure, and rhythm from Shakespeare’s plays and poetry.
 
 ---
 
 ## ⚡ Model Workflow
 
-
 ```
-
 Prompt → Tokenize → Embed → [Decoder ×6] → Linear → Softmax → Next Character
-
 ```
 
 ### 🧩 Components
 
-1. **Tokenizer**  
-   - Character-level: each character → unique token  
-   - No subword or BPE tokenization  
+1. **Tokenizer**
 
-2. **Embeddings**  
-   - Token embedding + **learned positional embeddings** (GPT-style)  
+   * Character-level: each character → unique token
+   * No subword or BPE tokenization
 
-3. **Decoder Block** (×6)  
-   - **Pre-LayerNorm** → Causal Self-Attention → Residual  
-   - **Pre-LayerNorm** → Feedforward (4× width, GELU) → Residual  
+2. **Embeddings**
 
-4. **Output**  
-   - Linear projection tied to token embeddings  
-   - Softmax for next-character probabilities  
+   * Token embedding + **learned positional embeddings** (GPT-style)
 
-5. **Generation**  
-   - Autoregressive, supports **temperature** and **top-k sampling**  
+3. **Decoder Block (×6)**
 
+   * **Pre-LayerNorm** → Causal Self-Attention → Residual
+   * **Pre-LayerNorm** → Feedforward (4× width, GELU) → Residual
+
+4. **Output**
+
+   * Linear projection tied to token embeddings
+   * Softmax for next-character probabilities
+
+5. **Generation**
+
+   * Autoregressive, supports **temperature** and **top-k sampling**
 
 ---
 
-Input Text: "The king said"
+### 🔹 Example Flow
+
+Input Text: `"The king said"`
+
+```
         │
         ▼
 ┌───────────────────────┐
@@ -65,7 +71,7 @@ Input Text: "The king said"
         │
         ▼
 ┌───────────────────────────────────┐
-│ Token + Learned Position Embeddings │ → Shape: [seq_len, 128]
+│ Token + Learned Position Embeddings│ → Shape: [seq_len, 128]
 └───────────────────────────────────┘
         │
         ▼
@@ -73,18 +79,18 @@ Input Text: "The king said"
 │        Decoder Block (×6)         │
 │ ┌──────────────┐                  │
 │ │ LayerNorm    │                  │ ← Pre-LN (GPT-2 style)
-│ │ Causal       │                  │
+│ │ Causal       │
 │ │ Self-Attention (4 heads)        │ → Masked: future tokens hidden
-│ └──────┬───────┘                  │
-│        ▼                          │
-│     Residual (+)                  │
-│        ▼                          │
-│ ┌──────────────┐                  │
+│ └──────┬───────┘
+│        ▼
+│     Residual (+)
+│        ▼
+│ ┌──────────────┐
 │ │ LayerNorm    │                  │ ← Pre-LN
 │ │ MLP (128→512→128)               │ → GELU, Dropout
-│ └──────┬───────┘                  │
-│        ▼                          │
-│     Residual (+)                  │
+│ └──────┬───────┘
+│        ▼
+│     Residual (+)
 └───────────────────────────────────┘
         │
         ▼
@@ -93,46 +99,44 @@ Input Text: "The king said"
 └───────────────────────┘
         │
         ▼
-┌───────────────────────┐
-│ LM Head (Linear 128→65)│ → Weight tied to token embeddings
-└───────────────────────┘
+┌──────────────────────────┐
+│ LM Head (Linear 128→65)  │ → Weight tied to token embeddings
+└──────────────────────────┘
         │
         ▼
 Autoregressive Generation Loop:
-1. Predict next character
-2. Append to input
-3. Repeat (max 256 chars)
+    1. Predict next character
+    2. Append to input
+    3. Repeat (max 256 chars)
         │
         ▼
 Output: "The king said, and to the next of Marcius..."
-
 ```
-
 
 ---
 
 ## 📊 Model Specifications
 
-| Component         | Details |
-|------------------|---------|
-| Architecture      | Decoder-only Transformer |
-| Layers            | 6 |
-| Embedding Dim     | 128 |
-| Attention Heads   | 4 |
-| Context Length    | 256 |
-| Vocabulary Size   | 65 (character-level) |
-| Parameters        | 1.23M |
-| Positional Encoding | Learned embeddings |
-| LayerNorm         | Pre-attention & pre-MLP |
-| Training Steps    | 10,000 (~on GPU) |
+| Component           | Details                  |
+| ------------------- | ------------------------ |
+| Architecture        | Decoder-only Transformer |
+| Layers              | 6                        |
+| Embedding Dim       | 128                      |
+| Attention Heads     | 4                        |
+| Context Length      | 256                      |
+| Vocabulary Size     | 65 (character-level)     |
+| Parameters          | 1.23M                    |
+| Positional Encoding | Learned embeddings       |
+| LayerNorm           | Pre-attention & pre-MLP  |
+| Training Steps      | 10,000 (~on GPU)         |
 
 ---
 
 ## 🏆 Results
 
 | Metric             | Value |
-|-------------------|-------|
-| Perplexity         | 3.02 |
+| ------------------ | ----- |
+| Perplexity         | 3.02  |
 | Character Accuracy | 64.9% |
 | NLL                | 1.105 |
 | BPC                | 1.594 |
@@ -144,7 +148,6 @@ Output: "The king said, and to the next of Marcius..."
 ## 📂 Project Structure
 
 ```
-
 gpt-mini/
 ├── src/model/          # attention.py, transformer.py, embeddings.py
 ├── src/data/           # tokenizer.py, dataloader.py
@@ -156,8 +159,7 @@ gpt-mini/
 ├── data/tinyshakespeare.txt
 ├── train.py
 └── evaluation_metrics.json
-
-````
+```
 
 ---
 
@@ -165,7 +167,7 @@ gpt-mini/
 
 ```bash
 python deploy/app.py
-````
+```
 
 * Type a prompt (e.g., `"To be or not to"`)
 * Generates text character-by-character in Shakespearean style
@@ -187,5 +189,5 @@ python deploy/app.py
 Small. Transparent. Understandable.
 GPT-Mini captures **how transformers generate language**, with focus on clarity and understanding.
 
-
+---
 
