@@ -1,20 +1,19 @@
 
 ---
 
-```markdown
 # 🧠 GPT-Mini
 *A compact GPT-style language model built from scratch, trained on Shakespeare.*  
 Learns character-level patterns, style, and rhythm from Shakespeare’s works.  
 Fully implemented in PyTorch with a decoder-only Transformer architecture.
 
-
 ---
 
 ### 🎬 Demo
 
-[![GPT-Mini Demo](https://youtu.be/FSzQwOj5jyA)
+[GPT-Mini Demo](https://youtu.be/FSzQwOj5jyA)  
 
-*Click to watch GPT-Mini generate Shakespearean text in real time.**
+*Click to watch GPT-Mini generate Shakespearean text in real time.*
+
 ---
 
 ## 📖 Overview
@@ -26,6 +25,7 @@ It learns **character-level language modeling**, capturing voice, structure, and
 ---
 
 ## ⚡ Model Workflow
+
 
 ```
 
