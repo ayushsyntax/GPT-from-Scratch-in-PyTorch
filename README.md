@@ -53,6 +53,7 @@ Prompt → Tokenize → Embed → [Decoder ×6] → Linear → Softmax → Next 
 5. **Generation**  
    - Autoregressive, supports **temperature** and **top-k sampling**  
 
+
 ---
 
 Input Text: "The king said"
@@ -104,7 +105,9 @@ Autoregressive Generation Loop:
         │
         ▼
 Output: "The king said, and to the next of Marcius..."
+
 ```
+
 
 ---
 
