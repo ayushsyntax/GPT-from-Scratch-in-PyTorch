@@ -121,7 +121,7 @@ Output: "The king said, and to the next of Marcius..."
 | Parameters        | 1.23M |
 | Positional Encoding | Learned embeddings |
 | LayerNorm         | Pre-attention & pre-MLP |
-| Training Steps    | 10,000 (~18 min on GPU) |
+| Training Steps    | 10,000 (~on GPU) |
 
 ---
 
