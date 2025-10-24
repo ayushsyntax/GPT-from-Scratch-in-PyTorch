@@ -12,8 +12,9 @@ Fully implemented in PyTorch with a decoder-only Transformer architecture.
 
 ### 🎬 Demo
 
-<video src="demo.mp4" controls width="600"></video>  
-*Generates Shakespearean text in real time.*
+![Demo](demo.mp4)
+
+*Watch GPT-Mini generate Shakespearean text in real time.*
 
 ---
 
