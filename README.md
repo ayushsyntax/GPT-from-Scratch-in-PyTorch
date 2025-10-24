@@ -12,9 +12,9 @@ Fully implemented in PyTorch with a decoder-only Transformer architecture.
 
 ### 🎬 Demo
 
-<video src="demo.mp4" autoplay muted loop playsinline width="600"></video>
+![Demo](demo.gif)
 
-*Watch GPT-Mini generate Shakespearean text in real time.*
+*GPT-Mini generating Shakespearean text in real time.*
 ---
 
 ## 📖 Overview
@@ -181,7 +181,7 @@ python deploy/app.py
 
 ## 🌟 Philosophy
 
-Small. Transparent. Teachable.
+Small. Transparent. Understandable.
 GPT-Mini captures **how transformers generate language**, with focus on clarity and understanding.
 
 
