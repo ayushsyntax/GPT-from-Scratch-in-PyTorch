@@ -1,6 +1,3 @@
-
----
-
 # 🧠 GPT-Mini
 
 *A compact GPT-style language model built from scratch, trained on Shakespeare.*
@@ -58,60 +55,39 @@ Prompt → Tokenize → Embed → [Decoder ×6] → Linear → Softmax → Next 
 
 ---
 
-### 🔹 Example Flow
+### 🔹 Example Flow: Input Text `"The"`
 
-Input Text: `"The king said"`
+```mermaid
+graph TD
+    A["Input: 'The'"] --> B["Tokenizer:<br/>'T'→56, 'h'→4, 'e'→32"]
+    B --> C["Token Embeddings<br/>[56, 4, 32] → [[vec1], [vec2], [vec3]]<br/>Shape: [3, 128]"]
+    C --> D["Positional Embeddings<br/>+pos_enc[0], +pos_enc[1], +pos_enc[2]<br/>Shape: [3, 128]"]
+    D --> E["Decoder Block 1"]
+    E --> F["..."]
+    F --> G["Decoder Block 6"]
+    G --> H["Final LayerNorm<br/>Shape: [3, 128]"]
+    H --> I["LM Head (Linear)<br/>[3, 128] → [3, 65]"]
+    I --> J["Softmax → Probabilities<br/>for all 65 chars"]
+    J --> K["Prediction:<br/>Next char after 'e'<br/>(e.g., ' ' or ',')"]
 
+    subgraph "Decoder Block (Single Layer)"
+        L1["Pre-LayerNorm"]
+        L1 --> L2["Causal Self-Attention<br/>4 Heads, Masked"]
+        L2 --> L3["Residual Add"]
+        L3 --> L4["Pre-LayerNorm"]
+        L4 --> L5["MLP (128→512→128)<br/>GELU Activation"]
+        L5 --> L6["Residual Add"]
+    end
+
+    E -.-> L1
+    L6 -.-> F
 ```
-        │
-        ▼
-┌───────────────────────┐
-│  Char Tokenizer       │ → [56, 4, 32, 17, 8, 11, 52, 5, 1, 20]
-└───────────────────────┘
-        │
-        ▼
-┌───────────────────────────────────┐
-│ Token + Learned Position Embeddings│ → Shape: [seq_len, 128]
-└───────────────────────────────────┘
-        │
-        ▼
-┌───────────────────────────────────┐
-│        Decoder Block (×6)         │
-│ ┌──────────────┐                  │
-│ │ LayerNorm    │                  │ ← Pre-LN (GPT-2 style)
-│ │ Causal       │
-│ │ Self-Attention (4 heads)        │ → Masked: future tokens hidden
-│ └──────┬───────┘
-│        ▼
-│     Residual (+)
-│        ▼
-│ ┌──────────────┐
-│ │ LayerNorm    │                  │ ← Pre-LN
-│ │ MLP (128→512→128)               │ → GELU, Dropout
-│ └──────┬───────┘
-│        ▼
-│     Residual (+)
-└───────────────────────────────────┘
-        │
-        ▼
-┌───────────────────────┐
-│ Final LayerNorm       │
-└───────────────────────┘
-        │
-        ▼
-┌──────────────────────────┐
-│ LM Head (Linear 128→65)  │ → Weight tied to token embeddings
-└──────────────────────────┘
-        │
-        ▼
-Autoregressive Generation Loop:
-    1. Predict next character
-    2. Append to input
-    3. Repeat (max 256 chars)
-        │
-        ▼
-Output: "The king said, and to the next of Marcius..."
-```
+
+**Autoregressive Generation Loop:**
+1.  Model predicts the most likely next character (e.g., a space `' '`).
+2.  This character is appended to the input sequence (`"The "`).
+3.  The process repeats, using the updated sequence as input, predicting the next character, and appending it.
+4.  Continues until the maximum sequence length (e.g., 256 characters) is reached or a stopping condition is met.
 
 ---
 
@@ -190,4 +166,3 @@ Small. Transparent. Understandable.
 GPT-Mini captures **how transformers generate language**, with focus on clarity and understanding.
 
 ---
-
